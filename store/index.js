@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookie from 'js-cookie'
 
 
 export const state = () => ({
@@ -71,14 +72,33 @@ export const actions = {
             password: authData.password,
             returnSecureToken: true
          })
-            .then((res) => {
-                commit('setToken', res.data.idToken)
+            .then((res) => {    
+                let token = res.data.idToken;
+                commit('setToken', token)
+                // to cookie
+                Cookie.set('jwt', token)
             })
     },
 
+    initAuth ({commit}, req) {
+        let token;
+        
+        if (req) {
+            if (!req.headers.cookie) return false
+            const jwtCookie = req.headers.cookie
+                .split(';')
+                .find(t => t.trim().startsWith('jwt='))
+            if (!jwtCookie) return false
+            token = jwtCookie.split('=')[1]
+
+            commit('setToken', token)
+        }
+       
+    },
 
     logoutUser ({commit}) {
         commit('destroyToken')
+        Cookie.remove('jwt')
     },
 
 

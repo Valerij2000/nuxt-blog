@@ -22,7 +22,7 @@ export default {
     Header, Footer, Intro
   },
 
-  middleware: ['auth']
+  middleware: ['auth-check', 'auth']
 
 
 }

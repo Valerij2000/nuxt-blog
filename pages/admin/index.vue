@@ -50,7 +50,7 @@ export default {
  computed: {
     postsLoaded () {
       return this.$store.getters.getPostsLoaded;
-    },
+    }, 
 
 
      notesFilter () {

@@ -12,6 +12,7 @@
 
     <PostsList :posts="notesFilter"/>  
 
+
     <Contacts />   
          
       </div>
@@ -86,11 +87,6 @@ head () {
 
 <style lang="scss" scoped> 
 
-  .home-page-section {
-    min-height: 75vh;
-  }
 
-
- 
 
 </style>

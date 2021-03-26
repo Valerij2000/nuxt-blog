@@ -1,3 +1,6 @@
+import axios from 'axios'
+
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -14,9 +17,10 @@ export default {
     ]
   },
 
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-   
+    '~/assets/main.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -44,6 +48,25 @@ export default {
       'axios'
     ]
   },
+
+
+
+  generate: {
+    routes() {
+      return axios.get('https://blog-nuxt-55ce5-default-rtdb.firebaseio.com/posts.json')
+        .then(res => {
+          // Get id
+          const postsArray = [];
+                  for(let key in res.data) { 
+                      postsArray.unshift({ ...res.data[key], id: key })
+                  }
+            // Routes
+            return postsArray.map(post => {
+              return '/blog/' + post.id
+          })
+        })
+    }
+  }
 
 
 
